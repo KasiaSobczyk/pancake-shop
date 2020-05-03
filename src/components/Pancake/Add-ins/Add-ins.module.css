@@ -1,0 +1,28 @@
+.Pancake,
+.Pancake_1,
+.Pancake_2,
+.Pancake_3 {
+  height: 29%;
+  width: 76%;
+  background: linear-gradient(to right bottom, #dfc65a, #ca980e);
+  border-radius: 44%;
+  box-shadow: inset 0 -25px 5px #f0e4a2;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.Pancake {
+  bottom: 0;
+}
+
+.Pancake_1 {
+  bottom: 2.2rem;
+  left: 52%;
+}
+.Pancake_2 {
+  bottom: 4.2rem;
+}
+.Pancake_3 {
+  bottom: 6.4rem;
+}
