@@ -1,28 +1,37 @@
-.Pancake,
-.Pancake_1,
-.Pancake_2,
-.Pancake_3 {
-  height: 29%;
-  width: 76%;
-  background: linear-gradient(to right bottom, #dfc65a, #ca980e);
-  border-radius: 44%;
-  box-shadow: inset 0 -25px 5px #f0e4a2;
+.Chocolate {
+  background: url(../../../assets/images/choclate.png) center no-repeat transparent;
+  top: 6rem;
+  left: 0;
+  z-index: 1;
+}
+
+.Strawberry {
+  background: url(../../../assets/images/strawberry.png) center no-repeat transparent;
+  top: 7rem;
+  left: 2rem;
+  z-index: 3;
+}
+
+.IceCream {
+  background: url(../../../assets/images/icecream.png) center no-repeat transparent;
+  top: 5rem;
+  left: -2rem;
+  z-index: 2;
+}
+
+.Butter {
+  background: url(../../../assets/images/butter.png) center no-repeat transparent;
+  top: 7rem;
+  left: -6rem;
+  z-index: 5;
+}
+
+.Chocolate,
+.Strawberry,
+.IceCream,
+.Butter {
+  width: 28rem;
+  height: 9rem;
+  background-size: contain;
   position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-}
-
-.Pancake {
-  bottom: 0;
-}
-
-.Pancake_1 {
-  bottom: 2.2rem;
-  left: 52%;
-}
-.Pancake_2 {
-  bottom: 4.2rem;
-}
-.Pancake_3 {
-  bottom: 6.4rem;
 }

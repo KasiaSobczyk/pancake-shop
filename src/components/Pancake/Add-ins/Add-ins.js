@@ -7,23 +7,23 @@ class AddIns extends Component {
     let ingredientType = null;
 
     switch (this.props.type) {
-      case 'pancake':
+      case 'doublePancake':
         ingredientType = <div className={styles.Pancake}></div>;
         break;
-      case 'pancake_1':
-        ingredientType = <div className={styles.Pancake_1}></div>;
-        break;
-      case 'pancake_2':
-        ingredientType = <div className={styles.Pancake_2}></div>;
-        break;
-      case 'pancake_3':
-        ingredientType = <div className={styles.Pancake_3}></div>;
+      case 'chocolate':
+        ingredientType = <div className={styles.Chocolate}></div>;
         break;
       case 'butter':
-        ingredientType = <div className={styles.Cheese}></div>;
+        ingredientType = <div className={styles.Butter}></div>;
+        break;
+      case 'iceCream':
+        ingredientType = <div className={styles.IceCream}></div>;
+        break;
+      case 'strawberry':
+        ingredientType = <div className={styles.Strawberry}></div>;
         break;
       default:
-        ingredientType = <p>DUPA</p>;
+        ingredientType = <div className={styles.Pancake}></div>;
     }
     return ingredientType;
   }
