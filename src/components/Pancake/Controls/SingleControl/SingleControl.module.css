@@ -1,0 +1,19 @@
+.singleControl {
+    width: 50%;
+    background-color: lawngreen;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.singleControl button {
+    display: block;
+    font: inherit;
+    margin: 0 5px;
+    width: 80px;
+    padding: 5px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid #3244e2;
+}

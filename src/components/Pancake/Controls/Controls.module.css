@@ -1,0 +1,11 @@
+.control {
+    display: flex;
+    width: 90%;
+    margin: auto;
+    box-shadow: 0 2px 2px #777;
+    flex-direction: column;
+    padding: 15px 0;
+    background-color: #fff;
+    align-items: center;
+    min-height: 200px;
+}

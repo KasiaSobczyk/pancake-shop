@@ -14,15 +14,33 @@
 
 .Pancake {
   bottom: 0;
+  animation-delay: 0.5s;
 }
 
 .Pancake_1 {
   bottom: 2.2rem;
   left: 52%;
+  /* animation-delay: 1s; */
 }
 .Pancake_2 {
   bottom: 4.2rem;
+  /* animation: falling 2s; */
+  /* animation-fill-mode: backwards; */
+  /* animation-delay: 2s; */
 }
 .Pancake_3 {
   bottom: 6.4rem;
+  /* animation: falling 3s;
+  animation-fill-mode: none;
+  animation-delay: 3s; */
+}
+
+@keyframes falling {
+  0% {
+    bottom: 100%;
+    opacity: 0;
+  }
+  100% {
+    bottom: initial;
+  }
 }
