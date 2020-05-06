@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
 import Aux from '../../hoc/react-aux';
+import Modal from '../../components/Modal/Modal';
 import Pancake from '../../components/Pancake/Pancake';
 import styles from './PancakeCreator.module.css';
 import Controls from '../../components/Pancake/Controls/Controls';
+import Order from '../../components/Pancake/Order/Order';
 
 const PRICES = {
   chocolate: 2,
@@ -20,7 +22,8 @@ class PancakeCreator extends Component {
       butter: 0,
       strawberry: 0,
     },
-    isPrepared: false,
+    isOrdrerd: false,
+    isAdded: false,
     totalPrice: 5,
   };
 
@@ -61,6 +64,14 @@ class PancakeCreator extends Component {
     this.updateOrder(updatedState);
   };
 
+  orderHandler = () => {
+    this.setState({ isOrdrerd: true });
+  };
+
+  cancelOrderHandler = () => {
+    this.setState({ isOrdrerd: false });
+  };
+
   updateOrder(addIns) {
     const summary = Object.keys(addIns)
       .map((k) => {
@@ -70,7 +81,7 @@ class PancakeCreator extends Component {
         return arr + el;
       }, 0);
 
-    this.setState({ isPrepared: summary > 0 });
+    this.setState({ isAdded: summary > 0 });
   }
 
   render() {
@@ -80,6 +91,9 @@ class PancakeCreator extends Component {
     }
     return (
       <Aux>
+        <Modal appear={this.state.isOrdrerd} closed={this.cancelOrderHandler}>
+          <Order products={this.state.addIns} />
+        </Modal>
         <div className={styles.pancakeLayout}>
           <div className={styles.col}>
             <Pancake addIns={this.state.addIns} />
@@ -90,7 +104,8 @@ class PancakeCreator extends Component {
               disabled={isDisabled}
               addNew={this.addProductHandler}
               removeOne={this.removeProductHandler}
-              isPrepared={this.state.isPrepared}
+              isAdded={this.state.isAdded}
+              ordered={this.orderHandler}
             />
           </div>
         </div>
