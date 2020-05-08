@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Navigation.module.css';
-import Logo from '../Logo/Logo';
+import Logo from '../Utilities/Logo/Logo';
 import Nav from './Nav/Nav';
 import Toogle from './SideDrawer/Toogle/Toogle';
 

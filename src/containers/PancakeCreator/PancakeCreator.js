@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/react-aux';
-import Modal from '../../components/Modal/Modal';
+import Aux from '../../hoc/AuxReact/react-aux';
+import Modal from '../../components/Utilities/Modal/Modal';
 import Pancake from '../../components/Pancake/Pancake';
 import styles from './PancakeCreator.module.css';
 import Controls from '../../components/Pancake/Controls/Controls';

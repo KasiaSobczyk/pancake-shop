@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './SideDrawer.module.css';
-import Logo from '../../Logo/Logo';
+import Logo from '../../Utilities/Logo/Logo';
 import Nav from '../Nav/Nav';
-import Backdrop from '../../Backdrop/Backdrop';
-import Aux from '../../../hoc/react-aux';
+import Backdrop from '../../Utilities/Backdrop/Backdrop';
+import Aux from '../../../hoc/AuxReact/react-aux';
 
 const sideDrawer = (props) => {
   let showDrawer = [styles.sideDrawer, styles.close];
