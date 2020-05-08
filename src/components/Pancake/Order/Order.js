@@ -1,4 +1,6 @@
 import React from 'react';
+
+import Button from '../../Button/Button';
 import Aux from '../../../hoc/react-aux';
 const order = (props) => {
   const products = Object.keys(props.products).map((k) => {
@@ -13,8 +15,14 @@ const order = (props) => {
       <h3>Your order</h3>
       <p>Choose your favourite add-ons</p>
       <ul>{products}</ul>
-      <button>CANCEL</button>
-      <button>SUBMIT</button>
+      <b>Total price: {props.price.toFixed(2)}</b>
+      <p>Proceed to checkout</p>
+      <Button class="danger" clicked={props.canceled}>
+        CANCEL
+      </Button>
+      <Button class="success" clicked={props.submitted}>
+        SUBMIT
+      </Button>
     </Aux>
   );
 };

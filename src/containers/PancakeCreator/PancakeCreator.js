@@ -72,6 +72,10 @@ class PancakeCreator extends Component {
     this.setState({ isOrdrerd: false });
   };
 
+  submitOrderHandler = () => {
+    alert('submitted!');
+  };
+
   updateOrder(addIns) {
     const summary = Object.keys(addIns)
       .map((k) => {
@@ -92,7 +96,12 @@ class PancakeCreator extends Component {
     return (
       <Aux>
         <Modal appear={this.state.isOrdrerd} closed={this.cancelOrderHandler}>
-          <Order products={this.state.addIns} />
+          <Order
+            products={this.state.addIns}
+            price={this.state.totalPrice}
+            submitted={this.submitOrderHandler}
+            canceled={this.cancelOrderHandler}
+          />
         </Modal>
         <div className={styles.pancakeLayout}>
           <div className={styles.col}>
