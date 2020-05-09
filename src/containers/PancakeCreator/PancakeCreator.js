@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-
-import Aux from '../../hoc/AuxReact/react-aux';
-import Modal from '../../components/Utilities/Modal/Modal';
-import Pancake from '../../components/Pancake/Pancake';
-import styles from './PancakeCreator.module.css';
+import axios from '../../axios-conf';
 import Controls from '../../components/Pancake/Controls/Controls';
 import Order from '../../components/Pancake/Order/Order';
+import Pancake from '../../components/Pancake/Pancake';
+import Loader from '../../components/Utilities/Loader/Loader';
+import Modal from '../../components/Utilities/Modal/Modal';
+import Aux from '../../hoc/AuxReact/react-aux';
+import withErrorHandler from '../../hoc/errorHandler/withErrorHandler';
+import styles from './PancakeCreator.module.css';
 
 const PRICES = {
   chocolate: 2,
@@ -22,6 +24,7 @@ class PancakeCreator extends Component {
       butter: 0,
       strawberry: 0,
     },
+    loading: false,
     isOrdrerd: false,
     isAdded: false,
     totalPrice: 5,
@@ -73,7 +76,29 @@ class PancakeCreator extends Component {
   };
 
   submitOrderHandler = () => {
-    alert('submitted!');
+    this.setState({ loading: true });
+    const completeOrder = {
+      addIns: this.state.addIns,
+      price: this.state.totalPrice,
+      orderer: {
+        name: 'John Doe',
+        address: {
+          street: '123 Main St',
+          zipCode: '54341',
+          country: 'USA',
+        },
+        email: 'john32423@gmail.com',
+      },
+      deliveryMethod: 'personal pickup',
+    };
+    axios
+      .post('/orders.json', completeOrder)
+      .then((res) => {
+        this.setState({ loading: false, isOrdrerd: false });
+      })
+      .catch((err) => {
+        this.setState({ loading: false, isOrdrerd: false });
+      });
   };
 
   updateOrder(addIns) {
@@ -90,18 +115,25 @@ class PancakeCreator extends Component {
 
   render() {
     const isDisabled = { ...this.state.addIns };
+    let orderComponent = (
+      <Order
+        products={this.state.addIns}
+        price={this.state.totalPrice}
+        submitted={this.submitOrderHandler}
+        canceled={this.cancelOrderHandler}
+      />
+    );
+    if (this.state.loading) {
+      orderComponent = <Loader />;
+    }
+
     for (let k in isDisabled) {
       isDisabled[k] = isDisabled[k] === 0;
     }
     return (
       <Aux>
         <Modal appear={this.state.isOrdrerd} closed={this.cancelOrderHandler}>
-          <Order
-            products={this.state.addIns}
-            price={this.state.totalPrice}
-            submitted={this.submitOrderHandler}
-            canceled={this.cancelOrderHandler}
-          />
+          {orderComponent}
         </Modal>
         <div className={styles.pancakeLayout}>
           <div className={styles.col}>
@@ -123,4 +155,4 @@ class PancakeCreator extends Component {
   }
 }
 
-export default PancakeCreator;
+export default withErrorHandler(PancakeCreator, axios);
