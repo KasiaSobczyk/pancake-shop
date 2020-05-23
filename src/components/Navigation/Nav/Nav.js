@@ -4,8 +4,10 @@ import styles from './Nav.module.css';
 
 const nav = () => (
   <ul className={styles.nav}>
-    <Item active link='/'>DUOA</Item>
-    <Item link='/'>CART</Item>
+    <Item exact link="/">
+      Crete pancake
+    </Item>
+    <Item link="/my-orders">Orders</Item>
   </ul>
 );
 

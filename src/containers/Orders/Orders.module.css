@@ -1,0 +1,15 @@
+.orders {
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.orders ul {
+    list-style: '- ';
+}
+
+.orders li {
+    margin-bottom: 1rem;
+}
