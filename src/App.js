@@ -1,11 +1,16 @@
 import React from 'react';
-import Layout from './hoc/Layout/Layout';
+import { Route, Switch } from 'react-router-dom';
 import PancakeCreator from './containers/PancakeCreator/PancakeCreator';
+import Summary from './containers/Summary/Summary';
+import Layout from './hoc/Layout/Layout';
 
 function App() {
   return (
     <Layout>
-      <PancakeCreator />
+      <Switch>
+        <Route path="/" exact component={PancakeCreator} />
+        <Route path="/checkout" component={Summary} />
+      </Switch>
     </Layout>
   );
 }

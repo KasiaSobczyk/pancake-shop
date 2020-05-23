@@ -5,7 +5,7 @@ import Base from '../Pancake/Base/Base';
 
 const pancake = (props) => {
   let selectedIngredients = Object.keys(props.addIns)
-    .map((k) => {
+    .map((k, i) => {
       return [...Array(props.addIns[k])].map((_, i) => {
         return <AddIns key={k + i} type={k} />;
       });

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from '../../axios-conf';
 import Controls from '../../components/Pancake/Controls/Controls';
 import Order from '../../components/Pancake/Order/Order';
 import Pancake from '../../components/Pancake/Pancake';
@@ -8,6 +7,7 @@ import Modal from '../../components/Utilities/Modal/Modal';
 import Aux from '../../hoc/AuxReact/react-aux';
 import withErrorHandler from '../../hoc/errorHandler/withErrorHandler';
 import styles from './PancakeCreator.module.css';
+import axios from '../../axios-conf';
 
 const PRICES = {
   chocolate: 2,
@@ -18,17 +18,23 @@ const PRICES = {
 
 class PancakeCreator extends Component {
   state = {
-    addIns: {
-      chocolate: 0,
-      iceCream: 0,
-      butter: 0,
-      strawberry: 0,
-    },
+    addIns: null,
     loading: false,
+    error: null,
     isOrdrerd: false,
     isAdded: false,
     totalPrice: 5,
   };
+
+  componentDidMount() {
+    console.log(this.props);
+    axios
+      .get('https://pancake-shop.firebaseio.com/addIns.json')
+      .then((res) => this.setState({ addIns: res.data }))
+      .catch((err) => {
+        this.setState({ error: true });
+      });
+  }
 
   addProductHandler = (type) => {
     const ingredients = this.state.addIns[type];
@@ -76,29 +82,16 @@ class PancakeCreator extends Component {
   };
 
   submitOrderHandler = () => {
-    this.setState({ loading: true });
-    const completeOrder = {
-      addIns: this.state.addIns,
-      price: this.state.totalPrice,
-      orderer: {
-        name: 'John Doe',
-        address: {
-          street: '123 Main St',
-          zipCode: '54341',
-          country: 'USA',
-        },
-        email: 'john32423@gmail.com',
-      },
-      deliveryMethod: 'personal pickup',
-    };
-    axios
-      .post('/orders.json', completeOrder)
-      .then((res) => {
-        this.setState({ loading: false, isOrdrerd: false });
-      })
-      .catch((err) => {
-        this.setState({ loading: false, isOrdrerd: false });
-      });
+    const params = [];
+    for (let i in this.state.addIns) {
+      params.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.addIns[i]));
+    }
+    params.push('price=' + this.state.totalPrice);
+    const queryParams = params.join('&');
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + queryParams,
+    });
   };
 
   updateOrder(addIns) {
@@ -115,26 +108,11 @@ class PancakeCreator extends Component {
 
   render() {
     const isDisabled = { ...this.state.addIns };
-    let orderComponent = (
-      <Order
-        products={this.state.addIns}
-        price={this.state.totalPrice}
-        submitted={this.submitOrderHandler}
-        canceled={this.cancelOrderHandler}
-      />
-    );
-    if (this.state.loading) {
-      orderComponent = <Loader />;
-    }
+    let pancake = this.state.error ? <h3>No available ingredients</h3> : <Loader />;
+    let orderComponent = null;
 
-    for (let k in isDisabled) {
-      isDisabled[k] = isDisabled[k] === 0;
-    }
-    return (
-      <Aux>
-        <Modal appear={this.state.isOrdrerd} closed={this.cancelOrderHandler}>
-          {orderComponent}
-        </Modal>
+    if (this.state.addIns) {
+      pancake = (
         <div className={styles.pancakeLayout}>
           <div className={styles.col}>
             <Pancake addIns={this.state.addIns} />
@@ -150,6 +128,29 @@ class PancakeCreator extends Component {
             />
           </div>
         </div>
+      );
+      orderComponent = (
+        <Order
+          products={this.state.addIns}
+          price={this.state.totalPrice}
+          submitted={this.submitOrderHandler}
+          canceled={this.cancelOrderHandler}
+        />
+      );
+    }
+    if (this.state.loading) {
+      orderComponent = <Loader />;
+    }
+
+    for (let k in isDisabled) {
+      isDisabled[k] = isDisabled[k] === 0;
+    }
+    return (
+      <Aux>
+        <Modal appear={this.state.isOrdrerd} closed={this.cancelOrderHandler}>
+          {orderComponent}
+        </Modal>
+        {pancake}
       </Aux>
     );
   }

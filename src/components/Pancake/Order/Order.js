@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 import Button from '../../Utilities/Button/Button';
 import Aux from '../../../hoc/AuxReact/react-aux';
 class Order extends Component {
-  componentWillUpdate() {
-    console.log("elo")
-  }
-
   render() {
     const products = Object.keys(this.props.products).map((k) => {
       return (

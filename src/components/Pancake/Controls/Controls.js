@@ -6,6 +6,7 @@ const products = [
   { name: 'Butter', type: 'butter' },
   { name: 'Ice cream', type: 'iceCream' },
   { name: 'Chocolate', type: 'chocolate' },
+  { name: 'Strawberry', type: 'strawberry'}
 ];
 
 const Controls = (props) => (

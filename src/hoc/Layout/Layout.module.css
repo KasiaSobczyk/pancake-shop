@@ -3,4 +3,5 @@
   height: 90vh;
   margin: 2rem auto;
   display: flex;
+  flex-direction: column;
 }
