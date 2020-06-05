@@ -14,6 +14,11 @@
     padding-left: 0;
 }
 
+.button:disabled {
+    cursor: not-allowed;
+    color: lightblue;
+}
+
 .success {
     color: #75db61;
 }

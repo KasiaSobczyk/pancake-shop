@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Controls from '../../components/Pancake/Controls/Controls';
 import Order from '../../components/Pancake/Order/Order';
 import Pancake from '../../components/Pancake/Pancake';
@@ -8,70 +9,24 @@ import Aux from '../../hoc/AuxReact/react-aux';
 import withErrorHandler from '../../hoc/errorHandler/withErrorHandler';
 import styles from './PancakeCreator.module.css';
 import axios from '../../axios-conf';
-
-const PRICES = {
-  chocolate: 2,
-  iceCream: 3,
-  butter: 1,
-  strawberry: 2,
-};
+import * as actions from '../../store/actions';
 
 class PancakeCreator extends Component {
   state = {
-    addIns: null,
     loading: false,
     error: null,
     isOrdrerd: false,
-    isAdded: false,
-    totalPrice: 5,
   };
 
   componentDidMount() {
-    console.log(this.props);
-    axios
-      .get('https://pancake-shop.firebaseio.com/addIns.json')
-      .then((res) => this.setState({ addIns: res.data }))
-      .catch((err) => {
-        this.setState({ error: true });
-      });
+    // console.log(this.props);
+    // axios
+    //   .get('https://pancake-shop.firebaseio.com/addIns.json')
+    //   .then((res) => this.setState({ addIns: res.data }))
+    //   .catch((err) => {
+    //     this.setState({ error: true });
+    //   });
   }
-
-  addProductHandler = (type) => {
-    const ingredients = this.state.addIns[type];
-    const amount = ingredients + 1;
-    const updatedState = {
-      ...this.state.addIns,
-    };
-    updatedState[type] = amount;
-    const price = PRICES[type];
-    const oldValue = this.state.totalPrice;
-    const multiplyPrice = oldValue + price;
-    this.setState({
-      addIns: updatedState,
-      totalPrice: multiplyPrice,
-    });
-    this.updateOrder(updatedState);
-  };
-
-  removeProductHandler = (type) => {
-    const ingredients = this.state.addIns[type];
-    if (ingredients === 0) {
-      return;
-    }
-    const amount = ingredients - 1;
-    const updatedState = {
-      ...this.state.addIns,
-    };
-    updatedState[type] = amount;
-    const price = PRICES[type];
-    const oldValue = this.state.totalPrice;
-    const multiplyPrice = oldValue - price;
-    this.setState({
-      addIns: updatedState,
-      totalPrice: multiplyPrice,
-    });
-    this.updateOrder(updatedState);
-  };
 
   orderHandler = () => {
     this.setState({ isOrdrerd: true });
@@ -82,16 +37,7 @@ class PancakeCreator extends Component {
   };
 
   submitOrderHandler = () => {
-    const params = [];
-    for (let i in this.state.addIns) {
-      params.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.addIns[i]));
-    }
-    params.push('price=' + this.state.totalPrice);
-    const queryParams = params.join('&');
-    this.props.history.push({
-      pathname: '/checkout',
-      search: '?' + queryParams,
-    });
+    this.props.history.push('/checkout');
   };
 
   updateOrder(addIns) {
@@ -103,27 +49,27 @@ class PancakeCreator extends Component {
         return arr + el;
       }, 0);
 
-    this.setState({ isAdded: summary > 0 });
+    return summary > 0;
   }
 
   render() {
-    const isDisabled = { ...this.state.addIns };
+    const isDisabled = { ...this.props.addIns };
     let pancake = this.state.error ? <h3>No available ingredients</h3> : <Loader />;
     let orderComponent = null;
 
-    if (this.state.addIns) {
+    if (this.props.addIns) {
       pancake = (
         <div className={styles.pancakeLayout}>
           <div className={styles.col}>
-            <Pancake addIns={this.state.addIns} />
+            <Pancake addIns={this.props.addIns} />
           </div>
           <div className={styles.col_1}>
             <Controls
-              price={this.state.totalPrice}
+              price={this.props.totalPrice}
               disabled={isDisabled}
-              addNew={this.addProductHandler}
-              removeOne={this.removeProductHandler}
-              isAdded={this.state.isAdded}
+              addNew={this.props.onAddInsAdded}
+              removeOne={this.props.onAddInsDeleted}
+              isAdded={this.updateOrder(this.props.addIns)}
               ordered={this.orderHandler}
             />
           </div>
@@ -131,8 +77,8 @@ class PancakeCreator extends Component {
       );
       orderComponent = (
         <Order
-          products={this.state.addIns}
-          price={this.state.totalPrice}
+          products={this.props.addIns}
+          price={this.props.totalPrice}
           submitted={this.submitOrderHandler}
           canceled={this.cancelOrderHandler}
         />
@@ -156,4 +102,20 @@ class PancakeCreator extends Component {
   }
 }
 
-export default withErrorHandler(PancakeCreator, axios);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddInsAdded: (name) => dispatch({ type: actions.ADD_ADDITIVE, name: name }),
+    onAddInsDeleted: (name) => dispatch({ type: actions.REMOVE_ADDITIVE, name: name }),
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    addIns: state.addIns,
+    totalPrice: state.totalPrice,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(PancakeCreator, axios));
