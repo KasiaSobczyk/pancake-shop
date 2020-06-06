@@ -7,19 +7,18 @@ import Loader from '../../components/Utilities/Loader/Loader';
 import Modal from '../../components/Utilities/Modal/Modal';
 import Aux from '../../hoc/AuxReact/react-aux';
 import withErrorHandler from '../../hoc/errorHandler/withErrorHandler';
+import * as actions from '../../store/actions/index';
 import styles from './PancakeCreator.module.css';
 import axios from '../../axios-conf';
-import * as actions from '../../store/actions';
 
 class PancakeCreator extends Component {
   state = {
-    loading: false,
-    error: null,
     isOrdrerd: false,
   };
 
   componentDidMount() {
-    // console.log(this.props);
+    console.log(this.props);
+    this.props.onAddInsSet();
     // axios
     //   .get('https://pancake-shop.firebaseio.com/addIns.json')
     //   .then((res) => this.setState({ addIns: res.data }))
@@ -54,7 +53,7 @@ class PancakeCreator extends Component {
 
   render() {
     const isDisabled = { ...this.props.addIns };
-    let pancake = this.state.error ? <h3>No available ingredients</h3> : <Loader />;
+    let pancake = this.props.error ? <h3>No available ingredients</h3> : <Loader />;
     let orderComponent = null;
 
     if (this.props.addIns) {
@@ -84,9 +83,9 @@ class PancakeCreator extends Component {
         />
       );
     }
-    if (this.state.loading) {
-      orderComponent = <Loader />;
-    }
+    // if (this.state.loading) {
+    //   orderComponent = <Loader />;
+    // }
 
     for (let k in isDisabled) {
       isDisabled[k] = isDisabled[k] === 0;
@@ -104,14 +103,16 @@ class PancakeCreator extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddInsAdded: (name) => dispatch({ type: actions.ADD_ADDITIVE, name: name }),
-    onAddInsDeleted: (name) => dispatch({ type: actions.REMOVE_ADDITIVE, name: name }),
+    onAddInsSet: () => dispatch(actions.fetchAddIns()),
+    onAddInsAdded: (name) => dispatch(actions.addAdditive(name)),
+    onAddInsDeleted: (name) => dispatch(actions.removeAdditive(name)),
   };
 };
 const mapStateToProps = (state) => {
   return {
     addIns: state.addIns,
     totalPrice: state.totalPrice,
+    error: state.error,
   };
 };
 
