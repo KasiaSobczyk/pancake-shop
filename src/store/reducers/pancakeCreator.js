@@ -1,4 +1,5 @@
 import * as actions from '../actions/actions';
+import { reducerHelper } from '../helper';
 
 const PRICES = {
   butter: 1,
@@ -12,41 +13,41 @@ const initialState = {
   totalPrice: 0,
   error: false,
 };
+const setAddIns = (state, action) => {
+  return reducerHelper(state, { addIns: action.addIns, error: false, totalPrice: 0 });
+};
+
+const setAddInsFail = (state, action) => {
+  return reducerHelper(state, { error: true });
+};
+
+const addAdditive = (state, action) => {
+  const newAdditive = { [action.name]: state.addIns[action.name] + 1 };
+  const newAddIns = reducerHelper(state.addIns, newAdditive);
+  const updatedState = {
+    addIns: newAddIns,
+    totalPrice: state.totalPrice + PRICES[action.name],
+  };
+  return reducerHelper(state, updatedState);
+};
+
+const removeAdditive = (state, action) => {
+  const updatedAdditive = { [action.name]: state.addIns[action.name] - 1 };
+  const updatedAddIns = reducerHelper(state.addIns, updatedAdditive);
+  const updatedSt = {
+    addIns: updatedAddIns,
+    totalPrice: state.totalPrice + PRICES[action.name],
+  };
+  return reducerHelper(state, updatedSt);
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.INIT_ADDINS:
-      return {
-        ...state,
-        addIns: action.addIns,
-        error: false,
-        totalPrice: 0
-      };
-    case actions.FETCH_ADDINS_FAILURE:
-      return {
-        ...state,
-        error: true,
-      };
-    case actions.ADD_ADDITIVE:
-      return {
-        ...state,
-        addIns: {
-          ...state.addIns,
-          [action.name]: state.addIns[action.name] + 1,
-        },
-        totalPrice: state.totalPrice + PRICES[action.name],
-      };
-    case actions.REMOVE_ADDITIVE:
-      return {
-        ...state,
-        addIns: {
-          ...state.addIns,
-          [action.addIns]: state.addIns[action.name] - 1,
-        },
-        totalPrice: state.totalPrice - PRICES[action.name],
-      };
-    default:
-      return state;
+    case actions.INIT_ADDINS: return setAddIns(state, action);
+    case actions.FETCH_ADDINS_FAILURE: return setAddInsFail(state, action);
+    case actions.ADD_ADDITIVE: return addAdditive(state, action);
+    case actions.REMOVE_ADDITIVE: return removeAdditive(state, action);
+    default: return state;
   }
 };
 
