@@ -1,2 +1,2 @@
 export { fetchAddIns, addAdditive, removeAdditive } from './pancakeCreator';
-export {} from './summary';
+export { order, orderInit, orders } from './summary';

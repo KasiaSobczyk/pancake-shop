@@ -16,14 +16,14 @@ export const fetchAddIns = () => {
         dispatch(initAddIns(res.data));
       })
       .catch((err) => {
-        dispatch(fetchAddInsFailed());
+        dispatch(fetchAddInsFAILURE());
       });
   };
 };
 
-export const fetchAddInsFailed = () => {
+export const fetchAddInsFAILURE = () => {
   return {
-    type: action.FETCH_ADDINS_FAILED,
+    type: action.FETCH_ADDINS_FAILURE,
   };
 };
 

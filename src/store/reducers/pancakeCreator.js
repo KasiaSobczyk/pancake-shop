@@ -20,8 +20,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         addIns: action.addIns,
         error: false,
+        totalPrice: 0
       };
-    case actions.FETCH_ADDINS_FAILED:
+    case actions.FETCH_ADDINS_FAILURE:
       return {
         ...state,
         error: true,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from '../../axios-conf';
 import Controls from '../../components/Pancake/Controls/Controls';
 import Order from '../../components/Pancake/Order/Order';
 import Pancake from '../../components/Pancake/Pancake';
@@ -9,7 +10,6 @@ import Aux from '../../hoc/AuxReact/react-aux';
 import withErrorHandler from '../../hoc/errorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 import styles from './PancakeCreator.module.css';
-import axios from '../../axios-conf';
 
 class PancakeCreator extends Component {
   state = {
@@ -36,6 +36,7 @@ class PancakeCreator extends Component {
   };
 
   submitOrderHandler = () => {
+    this.props.onCheckoutInit();
     this.props.history.push('/checkout');
   };
 
@@ -106,13 +107,15 @@ const mapDispatchToProps = (dispatch) => {
     onAddInsSet: () => dispatch(actions.fetchAddIns()),
     onAddInsAdded: (name) => dispatch(actions.addAdditive(name)),
     onAddInsDeleted: (name) => dispatch(actions.removeAdditive(name)),
+    onCheckoutInit: () => dispatch(actions.orderInit()),
   };
 };
 const mapStateToProps = (state) => {
   return {
-    addIns: state.addIns,
-    totalPrice: state.totalPrice,
-    error: state.error,
+    addIns: state.pancake.addIns,
+    totalPrice: state.pancake.totalPrice,
+    error: state.pancake.error,
+    ordered: state.summary.ordered,
   };
 };
 

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Button from '../../../components/Utilities/Button/Button';
 import style from './ContactData.module.css';
+import withErrorHandler from '../../../hoc/errorHandler/withErrorHandler';
 import axios from '../../../axios-conf';
 import Loader from '../../../components/Utilities/Loader/Loader';
 import Input from '../../../components/Utilities/Input/Input';
 import { connect } from 'react-redux';
+import * as actions from '../../../store/actions';
 
 class ContactData extends Component {
   state = {
@@ -101,13 +103,12 @@ class ContactData extends Component {
             { value: 'home', displayValue: 'home delivery' },
           ],
         },
-        value: '',
+        value: 'personal',
         validation: {},
         valid: true,
       },
     },
-    loading: false,
-    isFormValid: false
+    isFormValid: false,
   };
 
   inputHandler = (e, id) => {
@@ -118,7 +119,7 @@ class ContactData extends Component {
     updatedElement.valid = this.checkIsValid(updatedElement.value, updatedElement.validation);
     updatedElement.touched = true;
     updatedOrder[id] = updatedElement;
-    for(let i in updatedOrder){
+    for (let i in updatedOrder) {
       isFormValid = updatedOrder[i].valid && isFormValid;
     }
     this.setState({ order: updatedOrder, isFormValid: isFormValid });
@@ -140,7 +141,6 @@ class ContactData extends Component {
 
   sumUpHandler = (e) => {
     e.preventDefault();
-    this.setState({ loading: true });
     const form = {};
     for (let i in this.state.order) {
       form[i] = this.state.order[i].value;
@@ -150,15 +150,7 @@ class ContactData extends Component {
       price: this.props.totalPrice,
       order: form,
     };
-    axios
-      .post('/orders.json', completeOrder)
-      .then((res) => {
-        this.setState({ loading: false });
-        this.props.history.push('/');
-      })
-      .catch((err) => {
-        this.setState({ loading: false });
-      });
+    this.props.onCheckout(completeOrder);
   };
 
   render() {
@@ -188,7 +180,7 @@ class ContactData extends Component {
         </Button>
       </form>
     );
-    if (this.state.loading) {
+    if (this.props.loading) {
       userForm = <Loader />;
     }
     return (
@@ -200,11 +192,18 @@ class ContactData extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    addIns: state.addIns,
-    totalPrice: state.totalPrice
-  }
-}
+    addIns: state.pancake.addIns,
+    totalPrice: state.pancake.totalPrice,
+    loading: state.summary.loading,
+  };
+};
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCheckout: (data) => dispatch(actions.order(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
