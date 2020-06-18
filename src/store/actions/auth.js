@@ -40,6 +40,10 @@ export const auth = (email, password, isAuth) => {
     axios
       .post(url, user)
       .then((res) => {
+        const expTime = new Date(new Date().getTime() + res.data.expiresIn * 1000);
+        localStorage.setItem('token', res.data.idToken);
+        localStorage.setItem('userId', res.data.locald);
+        localStorage.setItem('expirationDate', expTime);
         dispatch(authSuccess(res.data.locald, res.data.idToken));
         dispatch(checkExpiryTime(res.data.expiresIn));
       })
@@ -49,9 +53,37 @@ export const auth = (email, password, isAuth) => {
   };
 };
 
+export const setRedirect = (url) => {
+  return {
+    type: actions.SET_REDIRECT_PATH,
+    path: url,
+  };
+};
+
 export const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('localId');
+  localStorage.removeItem('expirationDate');
   return {
     type: actions.AUTH_LOGOUT,
+  };
+};
+
+export const checkAuthState = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      dispatch(logout());
+    } else {
+      const expTime = new Date(localStorage.getItem('expirationDate'));
+      if ((expTime) => new Date()) {
+        const user = localStorage.getItem('userId');
+        dispatch(authSuccess(token, user));
+        dispatch(checkExpiryTime((expTime.getTime() - new Date().getTime()) / 1000));
+      } else {
+        dispatch(logout());
+      }
+    }
   };
 };
 

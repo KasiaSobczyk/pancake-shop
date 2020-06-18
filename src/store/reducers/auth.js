@@ -6,6 +6,7 @@ const initialState = {
   token: null,
   loading: false,
   error: null,
+  redirectPath: '/'
 };
 
 const authInit = (state, action) => {
@@ -29,12 +30,17 @@ const authSuccess = (state, action) => {
   });
 };
 
+const setRedirectPath = (state, action) => {
+  return reducerHelper(state, { redirectPath: action.path });
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.AUTH_INIT: return authInit(state, action);
     case actions.AUTH_FAILURE: return authFailure(state, action);
     case actions.AUTH_SUCCESS: return authSuccess(state, action);
     case actions.AUTH_LOGOUT: return authLogout(state, action);
+    case actions.SET_REDIRECT_PATH: return setRedirectPath(state, action);
     default: return state;
   }
 };

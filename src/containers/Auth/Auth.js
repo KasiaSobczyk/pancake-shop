@@ -42,6 +42,12 @@ class Auth extends Component {
     isRegistered: true,
   };
 
+  componentDidMount() {
+    if (this.props.redirectPath !== '/' && !this.props.inProgress) {
+      this.props.onSetPath();
+    }
+  }
+
   checkIsValid(value, rule) {
     let isValid = true;
     if (!rule) {
@@ -118,7 +124,7 @@ class Auth extends Component {
     ));
 
     if (this.props.isAuth) {
-      redirect = <Redirect to="/" />;
+      redirect = <Redirect to={this.props.redirectPath} />;
     }
 
     let btn = (
@@ -154,14 +160,17 @@ class Auth extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onUserAuth: (email, password, isAuth) => dispatch(actions.auth(email, password, isAuth)),
+    onSetPath: () => dispatch(actions.setRedirect('/')),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
     isAuth: state.auth.token !== null,
+    inProgress: state.pancake.inProgress,
     loading: state.auth.loading,
     error: state.auth.error,
+    redirectPath: state.auth.redirectPath,
   };
 };
 

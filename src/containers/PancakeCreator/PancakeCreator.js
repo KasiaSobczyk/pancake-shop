@@ -31,6 +31,7 @@ class PancakeCreator extends Component {
     if (this.props.isAuth) {
       this.setState({ isOrdrerd: true });
     } else {
+      this.props.onSetPath('/checkout')
       this.props.history.push('/auth');
     }
   };
@@ -112,6 +113,7 @@ const mapDispatchToProps = (dispatch) => {
     onAddInsSet: () => dispatch(actions.fetchAddIns()),
     onAddInsAdded: (name) => dispatch(actions.addAdditive(name)),
     onAddInsDeleted: (name) => dispatch(actions.removeAdditive(name)),
+    onSetPath: (path) => dispatch(actions.setRedirect(path)),
     onCheckoutInit: () => dispatch(actions.orderInit()),
   };
 };
