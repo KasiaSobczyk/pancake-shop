@@ -28,7 +28,11 @@ class PancakeCreator extends Component {
   }
 
   orderHandler = () => {
-    this.setState({ isOrdrerd: true });
+    if (this.props.isAuth) {
+      this.setState({ isOrdrerd: true });
+    } else {
+      this.props.history.push('/auth');
+    }
   };
 
   cancelOrderHandler = () => {
@@ -71,6 +75,7 @@ class PancakeCreator extends Component {
               removeOne={this.props.onAddInsDeleted}
               isAdded={this.updateOrder(this.props.addIns)}
               ordered={this.orderHandler}
+              isAuth={this.props.isAuth}
             />
           </div>
         </div>
@@ -112,6 +117,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 const mapStateToProps = (state) => {
   return {
+    isAuth: state.auth.token !== null,
     addIns: state.pancake.addIns,
     totalPrice: state.pancake.totalPrice,
     error: state.pancake.error,

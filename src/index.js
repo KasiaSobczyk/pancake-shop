@@ -9,12 +9,14 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import pancakeReducer from './store/reducers/pancakeCreator';
 import summaryReducer from './store/reducers/summary';
+import authReducer from './store/reducers/auth';
 
 const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const reducers = combineReducers({
   pancake: pancakeReducer,
   summary: summaryReducer,
+  auth: authReducer,
 });
 
 const store = createStore(reducers, enhancers(applyMiddleware(thunkMiddleware)));

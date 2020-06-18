@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Aux from '../AuxReact/react-aux';
 import styles from './Layout.module.css';
 import Navigation from '../../components/Navigation/Navigation';
@@ -20,12 +21,22 @@ class Layout extends Component {
   render() {
     return (
       <Aux>
-        <Navigation switchToogle={this.toogleDrawerHandler} />
-        <SideDrawer close={this.closeSideDrawerHandler} open={this.state.show} />
+        <Navigation switchToogle={this.toogleDrawerHandler} isAuth={this.props.isAuth} />
+        <SideDrawer
+          isAuth={this.props.isAuth}
+          close={this.closeSideDrawerHandler}
+          open={this.state.show}
+        />
         <main className={styles.main}>{this.props.children}</main>
       </Aux>
     );
   }
 }
 
-export default Layout;
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.token !== null,
+  };
+};
+
+export default connect(mapStateToProps)(Layout);

@@ -13,11 +13,11 @@ export const orderInit = () => {
   };
 };
 
-export const order = (data) => {
+export const order = (data, token) => {
   return (dispatch) => {
     dispatch(orderStart());
     axios
-      .post('/orders.json', data)
+      .post('/orders.json?auth=' + token, data)
       .then((res) => {
         dispatch(orderSuccess(res.data.name, data));
       })
@@ -48,11 +48,11 @@ export const ordersInit = () => {
   };
 };
 
-export const orders = () => {
+export const orders = (token) => {
   return (dispatch) => {
     dispatch(ordersInit());
     axios
-      .get('/orders.json')
+      .get('/orders.json?auth=' + token)
       .then((res) => {
         let orders = [];
         for (let i in res.data) {

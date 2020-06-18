@@ -150,7 +150,7 @@ class ContactData extends Component {
       price: this.props.totalPrice,
       order: form,
     };
-    this.props.onCheckout(completeOrder);
+    this.props.onCheckout(completeOrder, this.props.token);
   };
 
   render() {
@@ -194,6 +194,7 @@ class ContactData extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    token: state.auth.token,
     addIns: state.pancake.addIns,
     totalPrice: state.pancake.totalPrice,
     loading: state.summary.loading,
@@ -202,7 +203,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCheckout: (data) => dispatch(actions.order(data)),
+    onCheckout: (data, authToken) => dispatch(actions.order(data, authToken)),
   };
 };
 

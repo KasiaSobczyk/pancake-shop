@@ -11,7 +11,7 @@ const navigation = (props) => (
       <Logo />
     </div>
     <nav className={styles.desktop}>
-      <Nav />
+      <Nav isAuth={props.isAuth} />
     </nav>
   </header>
 );

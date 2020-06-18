@@ -9,7 +9,7 @@ import Loader from '../../components/Utilities/Loader/Loader';
 
 class Orders extends Component {
   componentDidMount() {
-    this.props.onOrdersInit();
+    this.props.onOrdersInit(this.props.token);
   }
   render() {
     let orders = <Loader />;
@@ -28,6 +28,7 @@ class Orders extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    token: state.auth.token,
     orders: state.summary.orders,
     loading: state.summary.loading,
   };
@@ -35,7 +36,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onOrdersInit: () => dispatch(actions.orders()),
+    onOrdersInit: (authToken) => dispatch(actions.orders(authToken)),
   };
 };
 

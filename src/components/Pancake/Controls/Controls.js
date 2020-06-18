@@ -23,7 +23,7 @@ const Controls = (props) => (
     <h2>Total price: {props.price.toFixed(2)}</h2>
     <hr />
     <button type="button" disabled={!props.isAdded} onClick={props.ordered}>
-      ORDER NOW
+      {props.isAuth ? 'ORDER NOW' : 'SIGN UP TO ORDER'}
     </button>
   </div>
 );

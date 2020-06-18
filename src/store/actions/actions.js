@@ -1,3 +1,8 @@
+export const AUTH_INIT = 'AUTH_INIT';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_FAILURE = 'AUTH_FAILURE';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+
 export const ORDER_INIT = 'ORDER_INIT';
 export const ORDER_START = 'ORDER_START';
 export const ORDER_SUCCESS = 'ORDER_SUCCESS';
