@@ -149,6 +149,7 @@ class ContactData extends Component {
       addIns: this.props.addIns,
       price: this.props.totalPrice,
       order: form,
+      id: this.props.user,
     };
     this.props.onCheckout(completeOrder, this.props.token);
   };
@@ -197,6 +198,7 @@ const mapStateToProps = (state) => {
     token: state.auth.token,
     addIns: state.pancake.addIns,
     totalPrice: state.pancake.totalPrice,
+    user: state.auth.id,
     loading: state.summary.loading,
   };
 };

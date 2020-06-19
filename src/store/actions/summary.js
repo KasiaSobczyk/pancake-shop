@@ -19,6 +19,7 @@ export const order = (data, token) => {
     axios
       .post('/orders.json?auth=' + token, data)
       .then((res) => {
+        console.log("id  ", res.data.id)
         dispatch(orderSuccess(res.data.name, data));
       })
       .catch((err) => {
@@ -48,11 +49,12 @@ export const ordersInit = () => {
   };
 };
 
-export const orders = (token) => {
+export const orders = (token, id) => {
   return (dispatch) => {
     dispatch(ordersInit());
+    const queryParam = '?auth=' + token + '&orderBy="id"&equalTo="' + id + '"';
     axios
-      .get('/orders.json?auth=' + token)
+      .get('/orders.json' + queryParam)
       .then((res) => {
         let orders = [];
         for (let i in res.data) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import PancakeCreator from './containers/PancakeCreator/PancakeCreator';
 import Summary from './containers/Summary/Summary';
 import Layout from './hoc/Layout/Layout';
@@ -15,19 +15,34 @@ class App extends Component {
     this.props.onAutoLogin();
   }
   render() {
-    return (
-      <Layout>
+    let routes = (
+      <Switch>
+        <Route path="/auth" component={Auth} />
+        <Route path="/" exact component={PancakeCreator} />
+        <Redirect to="/" />
+      </Switch>
+    );
+
+    if (this.props.isAuth) {
+      routes = (
         <Switch>
-          <Route path="/auth" component={Auth} />
           <Route path="/checkout" component={Summary} />
           <Route path="/my-orders" component={Orders} />
           <Route path="/logout" component={Logout} />
           <Route path="/" exact component={PancakeCreator} />
+          <Redirect to="/" />
         </Switch>
-      </Layout>
-    );
+      );
+    }
+    return <Layout>{routes}</Layout>;
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.token !== null,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -35,4 +50,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

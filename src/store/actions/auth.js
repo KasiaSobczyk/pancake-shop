@@ -42,9 +42,9 @@ export const auth = (email, password, isAuth) => {
       .then((res) => {
         const expTime = new Date(new Date().getTime() + res.data.expiresIn * 1000);
         localStorage.setItem('token', res.data.idToken);
-        localStorage.setItem('userId', res.data.locald);
+        localStorage.setItem('userId', res.data.localId);
         localStorage.setItem('expirationDate', expTime);
-        dispatch(authSuccess(res.data.locald, res.data.idToken));
+        dispatch(authSuccess(res.data.localId, res.data.idToken));
         dispatch(checkExpiryTime(res.data.expiresIn));
       })
       .catch((err) => {
