@@ -1,5 +1,5 @@
 import * as actions from '../actions/actions';
-import { reducerHelper } from '../helper';
+import { updateObjHelper } from '../../shared/helper';
 
 const initialState = {
   orders: [],
@@ -8,30 +8,30 @@ const initialState = {
 };
 
 const orderInit = (state, action) => {
-  return reducerHelper(state, { isOrdered: false });
+  return updateObjHelper(state, { isOrdered: false });
 };
 const orderSuccess = (state, action) => {
-  const order = reducerHelper(action.order, { id: action.id });
-  return reducerHelper(state, {
+  const order = updateObjHelper(action.order, { id: action.id });
+  return updateObjHelper(state, {
     orders: state.orders.concat(order),
     loading: false,
     isOrdered: false,
   });
 };
 const orderFailure = (state, action) => {
-  return reducerHelper(state, { loading: false });
+  return updateObjHelper(state, { loading: false });
 };
 const orderStart = (state, action) => {
-  return reducerHelper(state, { loading: true });
+  return updateObjHelper(state, { loading: true });
 };
 const ordersInit = (state, action) => {
-  return reducerHelper(state, { loading: true });
+  return updateObjHelper(state, { loading: true });
 };
 const ordersSuccess = (state, action) => {
-  return reducerHelper(state, { orders: action.orders, loading: false });
+  return updateObjHelper(state, { orders: action.orders, loading: false });
 };
 const ordersFailure = (state, action) => {
-  return reducerHelper(state, { loading: false });
+  return updateObjHelper(state, { loading: false });
 };
 
 const reducer = (state = initialState, action) => {

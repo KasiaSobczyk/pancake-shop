@@ -6,6 +6,7 @@ import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import Loader from '../../components/Utilities/Loader/Loader';
 import { Redirect } from 'react-router-dom';
+import { updateObjHelper, checkIsValid } from '../../shared/helper';
 
 class Auth extends Component {
   state = {
@@ -48,42 +49,18 @@ class Auth extends Component {
     }
   }
 
-  checkIsValid(value, rule) {
-    let isValid = true;
-    if (!rule) {
-      return true;
-    }
-    if (rule.required) {
-      isValid = value.trim() !== '' && isValid;
-    }
-    if (rule.minLength) {
-      isValid = value.length >= rule.minLength && isValid;
-    }
-    if (rule.maxLength) {
-      isValid = value.length <= rule.maxLength && isValid;
-    }
-    if (rule.isEmail) {
-      const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = emailPattern.test(value) && isValid;
-    }
-    return isValid;
-  }
-
   inputHandler = (event, name) => {
-    const updatedConrols = {
-      ...this.state.controls,
-      [name]: {
-        ...this.state.controls[name],
+    const updatedConrols = updateObjHelper(this.state.controls, {
+      [name]: updateObjHelper(this.state.controls[name], {
         value: event.target.value,
-        valid: this.checkIsValid(event.target.value, this.state.controls[name].validation),
+        valid: checkIsValid(event.target.value, this.state.controls[name].validation),
         touched: true,
-      },
-    };
+      }),
+    });
     this.setState({ controls: updatedConrols });
   };
 
   switchMode = (e) => {
-    console.log('elo  ', this.state.isRegistered);
     this.setState((prev) => {
       return {
         isRegistered: !prev.isRegistered,

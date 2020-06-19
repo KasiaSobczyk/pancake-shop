@@ -17,7 +17,6 @@ class PancakeCreator extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
     this.props.onAddInsSet();
     // axios
     //   .get('https://pancake-shop.firebaseio.com/addIns.json')

@@ -19,7 +19,6 @@ export const order = (data, token) => {
     axios
       .post('/orders.json?auth=' + token, data)
       .then((res) => {
-        console.log("id  ", res.data.id)
         dispatch(orderSuccess(res.data.name, data));
       })
       .catch((err) => {

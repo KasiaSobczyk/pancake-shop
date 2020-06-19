@@ -1,5 +1,5 @@
 import * as actions from '../actions/actions';
-import { reducerHelper } from '../helper';
+import { updateObjHelper } from '../../shared/helper';
 
 const PRICES = {
   butter: 1,
@@ -15,7 +15,7 @@ const initialState = {
   error: false,
 };
 const setAddIns = (state, action) => {
-  return reducerHelper(state, {
+  return updateObjHelper(state, {
     addIns: action.addIns,
     inProgress: false,
     error: false,
@@ -24,29 +24,29 @@ const setAddIns = (state, action) => {
 };
 
 const setAddInsFail = (state, action) => {
-  return reducerHelper(state, { error: true });
+  return updateObjHelper(state, { error: true });
 };
 
 const addAdditive = (state, action) => {
   const newAdditive = { [action.name]: state.addIns[action.name] + 1 };
-  const newAddIns = reducerHelper(state.addIns, newAdditive);
+  const newAddIns = updateObjHelper(state.addIns, newAdditive);
   const updatedState = {
     inProgress: true,
     addIns: newAddIns,
     totalPrice: state.totalPrice + PRICES[action.name],
   };
-  return reducerHelper(state, updatedState);
+  return updateObjHelper(state, updatedState);
 };
 
 const removeAdditive = (state, action) => {
   const updatedAdditive = { [action.name]: state.addIns[action.name] - 1 };
-  const updatedAddIns = reducerHelper(state.addIns, updatedAdditive);
+  const updatedAddIns = updateObjHelper(state.addIns, updatedAdditive);
   const updatedSt = {
     inProgress: true,
     addIns: updatedAddIns,
     totalPrice: state.totalPrice + PRICES[action.name],
   };
-  return reducerHelper(state, updatedSt);
+  return updateObjHelper(state, updatedSt);
 };
 
 const reducer = (state = initialState, action) => {

@@ -1,14 +1,24 @@
 import React from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import PancakeCreator from './containers/PancakeCreator/PancakeCreator';
-import Summary from './containers/Summary/Summary';
 import Layout from './hoc/Layout/Layout';
-import Orders from './containers/Orders/Orders';
-import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import { connect } from 'react-redux';
 import * as actions from './store/actions';
 import { Component } from 'react';
+import async from './hoc/async/async';
+
+const summaryAsync = async(() => {
+  return import('./containers/Summary/Summary');
+});
+
+const ordersAsync = async(() => {
+  return import('./containers/Orders/Orders');
+});
+
+const authAsync = async(() => {
+  return import('./containers/Auth/Auth');
+});
 
 class App extends Component {
   componentDidMount() {
@@ -17,7 +27,7 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
-        <Route path="/auth" component={Auth} />
+        <Route path="/auth" component={authAsync} />
         <Route path="/" exact component={PancakeCreator} />
         <Redirect to="/" />
       </Switch>
@@ -26,9 +36,10 @@ class App extends Component {
     if (this.props.isAuth) {
       routes = (
         <Switch>
-          <Route path="/checkout" component={Summary} />
-          <Route path="/my-orders" component={Orders} />
+          <Route path="/checkout" component={summaryAsync} />
+          <Route path="/my-orders" component={ordersAsync} />
           <Route path="/logout" component={Logout} />
+          <Route path="/auth" component={authAsync} />
           <Route path="/" exact component={PancakeCreator} />
           <Redirect to="/" />
         </Switch>

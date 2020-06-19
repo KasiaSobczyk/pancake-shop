@@ -1,5 +1,5 @@
 import * as actions from '../actions/actions';
-import { reducerHelper } from '../helper';
+import { updateObjHelper } from '../../shared/helper';
 
 const initialState = {
   id: null,
@@ -10,19 +10,19 @@ const initialState = {
 };
 
 const authInit = (state, action) => {
-  return reducerHelper(state, { loading: true, error: null });
+  return updateObjHelper(state, { loading: true, error: null });
 };
 
 const authFailure = (state, action) => {
-  return reducerHelper(state, { loading: false, error: action.error });
+  return updateObjHelper(state, { loading: false, error: action.error });
 };
 
 const authLogout = (state, action) => {
-  return reducerHelper(state, { id: null, token: null });
+  return updateObjHelper(state, { id: null, token: null });
 };
 
 const authSuccess = (state, action) => {
-  return reducerHelper(state, {
+  return updateObjHelper(state, {
     id: action.id,
     token: action.token,
     loading: false,
@@ -31,7 +31,7 @@ const authSuccess = (state, action) => {
 };
 
 const setRedirectPath = (state, action) => {
-  return reducerHelper(state, { redirectPath: action.path });
+  return updateObjHelper(state, { redirectPath: action.path });
 };
 
 const reducer = (state = initialState, action) => {

@@ -6,6 +6,7 @@ import axios from '../../../axios-conf';
 import Loader from '../../../components/Utilities/Loader/Loader';
 import Input from '../../../components/Utilities/Input/Input';
 import { connect } from 'react-redux';
+import { updateObjHelper, checkIsValid } from '../../../shared/helper';
 import * as actions from '../../../store/actions';
 
 class ContactData extends Component {
@@ -112,32 +113,21 @@ class ContactData extends Component {
   };
 
   inputHandler = (e, id) => {
-    let updatedOrder = { ...this.state.order };
-    let updatedElement = { ...updatedOrder[id] };
+    let updatedElement = updateObjHelper(this.state.order[id], {
+      value: e.target.value,
+      valid: checkIsValid(e.target.value, this.state.order[id].validation),
+      touched: true,
+    });
+    let updatedOrder = updateObjHelper(this.state.order, {
+      [id]: updatedElement,
+    });
     let isFormValid = true;
-    updatedElement.value = e.target.value;
-    updatedElement.valid = this.checkIsValid(updatedElement.value, updatedElement.validation);
-    updatedElement.touched = true;
     updatedOrder[id] = updatedElement;
     for (let i in updatedOrder) {
       isFormValid = updatedOrder[i].valid && isFormValid;
     }
     this.setState({ order: updatedOrder, isFormValid: isFormValid });
   };
-
-  checkIsValid(value, rule) {
-    let isValid = true;
-    if (rule.required) {
-      isValid = value.trim() !== '' && isValid;
-    }
-    if (rule.minLength) {
-      isValid = value.length >= rule.minLength && isValid;
-    }
-    if (rule.maxLength) {
-      isValid = value.length <= rule.maxLength && isValid;
-    }
-    return isValid;
-  }
 
   sumUpHandler = (e) => {
     e.preventDefault();

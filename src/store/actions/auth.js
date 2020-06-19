@@ -19,7 +19,6 @@ export const authSuccess = (id, token) => {
 };
 
 export const authFailure = (err) => {
-  console.log('[action] ', err);
   return {
     type: actions.AUTH_FAILURE,
     error: err,
@@ -78,7 +77,7 @@ export const checkAuthState = () => {
       const expTime = new Date(localStorage.getItem('expirationDate'));
       if ((expTime) => new Date()) {
         const user = localStorage.getItem('userId');
-        dispatch(authSuccess(token, user));
+        dispatch(authSuccess(user, token));
         dispatch(checkExpiryTime((expTime.getTime() - new Date().getTime()) / 1000));
       } else {
         dispatch(logout());

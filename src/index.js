@@ -11,7 +11,10 @@ import pancakeReducer from './store/reducers/pancakeCreator';
 import summaryReducer from './store/reducers/summary';
 import authReducer from './store/reducers/auth';
 
-const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const enhancers =
+  process.env.NODE_ENV === 'development'
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : null || compose;
 
 const reducers = combineReducers({
   pancake: pancakeReducer,
