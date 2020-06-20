@@ -15,7 +15,7 @@ const orderSuccess = (state, action) => {
   return updateObjHelper(state, {
     orders: state.orders.concat(order),
     loading: false,
-    isOrdered: false,
+    isOrdered: true,
   });
 };
 const orderFailure = (state, action) => {

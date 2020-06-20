@@ -1,5 +1,11 @@
 .logo {
-    height: 70%;
+    height: 75%;
+    display: flex;
+}
+
+.logo p {
+    margin-left: 0.4rem;
+    align-self: center;
 }
 
 .logo img {

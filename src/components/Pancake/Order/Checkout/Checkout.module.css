@@ -8,20 +8,12 @@
   justify-content: space-evenly;
 }
 
-/* .checkout > * {
+.pancake {
   display: flex;
-  flex: 1;
-  height: 100%;
-} */
+}
 
-/* .pancake {
-  width: 300px;
-  height: 300px;
-  margin: auto;
-} */
-
-@media (min-width: 600px) {
+@media (max-width: 600px) {
   .checkout {
-    /* width: 500px; */
+     width: 500px;
   }
 }

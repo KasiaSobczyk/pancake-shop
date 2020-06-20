@@ -5,28 +5,29 @@ import Checkout from '../../components/Pancake/Order/Checkout/Checkout';
 import ContactData from './ContactData/ContactData';
 
 class Summary extends Component {
-  cancelCheckoutHandler = () => {
-    this.props.history.goBack();
+  submitCheckoutHandler = () => {
+    this.props.history.replace('/contact');
   };
 
-  submitCheckoutHandler = () => {
-    this.props.history.replace('/checkout/contact');
+  goBackHandler = () => {
+    this.props.history.goBack();
   };
 
   render() {
     let checkout = <Redirect to="/" />;
     if (this.props.addIns) {
+      console.log('elo  ', this.props.ordered);
       const redirect = this.props.ordered ? <Redirect to="/" /> : null;
       checkout = (
         <div>
           {redirect}
           <Checkout
             addIns={this.props.addIns}
-            cancelCheckout={this.cancelCheckoutHandler}
+            cancelCheckout={this.goBackHandler}
             submitCheckout={this.submitCheckoutHandler}
           />
           <Route
-            path={this.props.match.path + '/contact'}
+            path={'/contact'}
             // render={(props) => (
             //   <ContactData {...props} totalPrice={this.props.price} addIns={this.props.addIns} />
             // )}
@@ -42,7 +43,7 @@ class Summary extends Component {
 const mapStateToProps = (state) => {
   return {
     addIns: state.pancake.addIns,
-    ordered: state.summary.ordered,
+    ordered: state.summary.isOrdered,
   };
 };
 

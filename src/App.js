@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import * as actions from './store/actions';
 import { Component } from 'react';
 import async from './hoc/async/async';
+import ContactData from './containers/Summary/ContactData/ContactData';
 
 const summaryAsync = async(() => {
   return import('./containers/Summary/Summary');
@@ -37,6 +38,7 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/checkout" component={summaryAsync} />
+          <Route path="/contact" component={ContactData} />
           <Route path="/my-orders" component={ordersAsync} />
           <Route path="/logout" component={Logout} />
           <Route path="/auth" component={authAsync} />
