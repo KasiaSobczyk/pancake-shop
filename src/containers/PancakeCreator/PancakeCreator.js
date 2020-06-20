@@ -11,7 +11,7 @@ import withErrorHandler from '../../hoc/errorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 import styles from './PancakeCreator.module.css';
 
-class PancakeCreator extends Component {
+export class PancakeCreator extends Component {
   state = {
     isOrdrerd: false,
   };
