@@ -1,4 +1,17 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
 body {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Raleway', sans-serif;
@@ -11,10 +24,6 @@ body {
 
 body > * {
   width: 100%;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 code {

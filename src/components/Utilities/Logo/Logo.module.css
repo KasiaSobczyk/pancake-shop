@@ -1,17 +1,18 @@
 .logo {
     height: 75%;
     display: flex;
+    text-decoration: none;
 }
 
 .logo p {
     margin: 0.3rem 0 0 0.2rem;
     align-self: center;
-    color: #fff;
+    color: #fbeecb;
 }
 
 .logo img {
     height: 100%;
-    color: #fff;
+    color: #fbeecb;
 }
 
 @media (max-width: 500px) {}

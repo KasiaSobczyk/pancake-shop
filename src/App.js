@@ -32,6 +32,7 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path="/auth" component={authAsync} />
+        <Route path="/creator" component={creatorAsync} />
         <Route path="/" exact component={Home} />
         <Redirect to="/" />
       </Switch>

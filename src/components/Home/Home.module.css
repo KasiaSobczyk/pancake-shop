@@ -10,7 +10,7 @@
 
 .title {
   margin-left: 4rem;
-  color: #fff;
+  color: #fbeecb;
   display: block;
   max-height: 40vh;
   height: 100%;
@@ -20,5 +20,5 @@
 }
 
 .title span {
-  color: red
+  color: #b44314;
 }

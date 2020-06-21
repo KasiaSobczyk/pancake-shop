@@ -5,7 +5,6 @@
 }
 
 .item a {
-  color: #8f5c2c;
   text-decoration: none;
   width: 100%;
   box-sizing: border-box;
@@ -15,7 +14,7 @@
 .item a:hover,
 .item a:active,
 .item a.active {
-  color: #40a4c8;
+  color: #227dbc;
 }
 
 @media (min-width: 500px) {
@@ -37,8 +36,8 @@
   .item a:hover,
   .item a:active,
   .item a.active {
-    border-bottom: 4px solid #40a4c8;
-    color: #fff;
+    border-bottom: 4px solid #227dbc;
+    color: #fbeecb;
     font-weight: bold;
   }
 }
