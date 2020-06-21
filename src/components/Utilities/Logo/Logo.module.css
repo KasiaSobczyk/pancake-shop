@@ -4,12 +4,14 @@
 }
 
 .logo p {
-    margin-left: 0.4rem;
+    margin: 0.3rem 0 0 0.2rem;
     align-self: center;
+    color: #fff;
 }
 
 .logo img {
     height: 100%;
+    color: #fff;
 }
 
 @media (max-width: 500px) {}
