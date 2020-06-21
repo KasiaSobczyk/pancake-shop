@@ -1,37 +1,41 @@
+.Chocolate,
+.Strawberry,
+.IceCream,
+.Butter {
+  width: 29rem;
+  height: 11rem;
+  display: flex;
+  position: absolute;
+  transform: translate(50%, 16%);
+}
+
 .Chocolate {
   background: url(../../../assets/images/choclate.png) center no-repeat transparent;
-  top: 6rem;
   left: 0;
   z-index: 1;
 }
 
 .Strawberry {
   background: url(../../../assets/images/strawberry.png) center no-repeat transparent;
-  top: 7rem;
-  left: 2rem;
+  left: 9rem;
   z-index: 3;
 }
 
 .IceCream {
   background: url(../../../assets/images/icecream.png) center no-repeat transparent;
-  top: 5rem;
   left: -2rem;
   z-index: 2;
 }
 
 .Butter {
   background: url(../../../assets/images/butter.png) center no-repeat transparent;
-  top: 7rem;
   left: -6rem;
   z-index: 5;
 }
 
-.Chocolate,
+.Butter,
 .Strawberry,
-.IceCream,
-.Butter {
-  width: 28rem;
-  height: 9rem;
+.Chocolate,
+.IceCream {
   background-size: contain;
-  position: absolute;
 }

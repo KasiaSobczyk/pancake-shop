@@ -17,14 +17,15 @@ body {
   font-family: 'Raleway', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to left bottom, #faf2f3, #f7bfc6, #f097a3);
+  /* background: linear-gradient(to left bottom, #faf2f3, #f7bfc6, #f097a3); */
+  background: linear-gradient(to top, #faf2f3, #df82af, #e65098);
   display: flex;
   height: 100vh;
 }
 
 body > * {
   width: 100%;
-}
+}a
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

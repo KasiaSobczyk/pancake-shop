@@ -1,21 +1,19 @@
 .Pancake {
-    width: 100%;
-    margin: auto;
-    height: 250px;
-    font-size: 1.2em;
-    font-weight: bold;
-    text-align: center;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(14%, -5%);
 }
 
 @media (min-width: 1000px) and (min-height: 700px) {
     .Pancake {
-        width: 700px;
-        height: 600px;
+        width: 70rem;
+        height: 70rem;
     }
 }
 
-@media (min-width:500px) and (min-height: 401px) {
+@media (max-width:500px) and (min-height: 401px) {
     .Pancake {
         width: 450px;
         height: 400px;

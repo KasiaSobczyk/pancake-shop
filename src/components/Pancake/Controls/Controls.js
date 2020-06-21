@@ -6,7 +6,7 @@ const products = [
   { name: 'Butter', type: 'butter' },
   { name: 'Ice cream', type: 'iceCream' },
   { name: 'Chocolate', type: 'chocolate' },
-  { name: 'Strawberry', type: 'strawberry'}
+  { name: 'Strawberry', type: 'strawberry' },
 ];
 
 const Controls = (props) => (
@@ -20,11 +20,18 @@ const Controls = (props) => (
         remove={() => props.removeOne(i.type)}
       />
     ))}
-    <h2>Total price: {props.price.toFixed(2)}</h2>
-    <hr />
-    <button type="button" disabled={!props.isAdded} onClick={props.ordered}>
-      {props.isAuth ? 'ORDER NOW' : 'SIGN UP TO ORDER'}
-    </button>
+    <div className={styles.summary}> 
+      <h2>Total price: {props.price.toFixed(2)}</h2>
+      <hr />
+      <button
+        type="button"
+        disabled={!props.isAdded}
+        onClick={props.ordered}
+        className={styles.submitBtn}
+      >
+        {props.isAuth ? 'order now' : 'sign up to order'}
+      </button>
+    </div>
   </div>
 );
 
