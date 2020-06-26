@@ -1,5 +1,4 @@
 import React from 'react';
-
 import styles from './Base.module.css';
 
 const base = () => (
