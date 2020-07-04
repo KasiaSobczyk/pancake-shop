@@ -9,5 +9,21 @@ export {
   logout,
   setRedirect,
 } from './auth';
-export { fetchAddIns, addAdditive, removeAdditive } from './pancakeCreator';
-export { order, orderInit, orders } from './summary';
+export {
+  fetchAddIns,
+  initAddIns,
+  fetchAddInsFAILURE,
+  addAdditive,
+  removeAdditive,
+} from './pancakeCreator';
+export {
+  order,
+  orderInit,
+  ordersInit,
+  orderStart,
+  orderSuccess,
+  orderFailure,
+  ordersSuccess,
+  ordersFailure,
+  orders,
+} from './summary';

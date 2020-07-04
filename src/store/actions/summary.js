@@ -1,5 +1,4 @@
 import * as actions from './actions';
-import axios from '../../axios-conf';
 
 export const orderStart = () => {
   return {
@@ -14,16 +13,10 @@ export const orderInit = () => {
 };
 
 export const order = (data, token) => {
-  return (dispatch) => {
-    dispatch(orderStart());
-    axios
-      .post('/orders.json?auth=' + token, data)
-      .then((res) => {
-        dispatch(orderSuccess(res.data.name, data));
-      })
-      .catch((err) => {
-        dispatch(orderFailure());
-      });
+  return {
+    type: actions.ORDER,
+    data: data,
+    token: token,
   };
 };
 
@@ -49,19 +42,10 @@ export const ordersInit = () => {
 };
 
 export const orders = (token, id) => {
-  return (dispatch) => {
-    dispatch(ordersInit());
-    const queryParam = '?auth=' + token + '&orderBy="id"&equalTo="' + id + '"';
-    axios
-      .get('/orders.json' + queryParam)
-      .then((res) => {
-        let orders = [];
-        for (let i in res.data) {
-          orders.push({ ...res.data[i], id: i });
-        }
-        dispatch(ordersSuccess(orders));
-      })
-      .catch((error) => dispatch(ordersFailure(error)));
+  return {
+    type: actions.ORDERS,
+    token: token,
+    id: id,
   };
 };
 

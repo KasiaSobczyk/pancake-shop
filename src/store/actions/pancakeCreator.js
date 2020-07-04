@@ -9,15 +9,8 @@ export const initAddIns = (res) => {
 };
 
 export const fetchAddIns = () => {
-  return (dispatch) => {
-    axios
-      .get('https://pancake-shop.firebaseio.com/addIns.json')
-      .then((res) => {
-        dispatch(initAddIns(res.data));
-      })
-      .catch((err) => {
-        dispatch(fetchAddInsFAILURE());
-      });
+  return {
+    type: action.FETCH_ADDINS,
   };
 };
 

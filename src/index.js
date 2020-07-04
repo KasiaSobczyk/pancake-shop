@@ -11,7 +11,7 @@ import pancakeReducer from './store/reducers/pancakeCreator';
 import summaryReducer from './store/reducers/summary';
 import authReducer from './store/reducers/auth';
 import createSagaMiddleware from 'redux-saga';
-import { watchAuth } from './store/effects/rootSaga';
+import { watchPancake, watchAuth, watchSummary } from './store/effects/rootSaga';
 
 const enhancers =
   process.env.NODE_ENV === 'development'
@@ -29,6 +29,8 @@ const saga = createSagaMiddleware();
 const store = createStore(reducers, enhancers(applyMiddleware(thunkMiddleware, saga)));
 
 saga.run(watchAuth);
+saga.run(watchPancake);
+saga.run(watchSummary);
 
 ReactDOM.render(
   <Provider store={store}>
